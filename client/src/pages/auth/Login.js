@@ -11,20 +11,30 @@ import {createOrUpdateUser} from '../../functions/auth'
 
 
 
-
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState("false");
   const {user}=useSelector((state) =>({...state}));
   const navigate=useNavigate()
-  let dispatch=useDispatch()
+  
+//isko majboori me huta rhe video me nhi hutaya hai( for the role based redirect)
 
   useEffect(()=>{
       if(user && user.token){
           navigate('/');
       }
-  },[user])
+  },[user]);
+
+  let dispatch=useDispatch()
+
+  const roleBasedRedirect =(res)=>{
+    if(res.data.role==='admin'){
+      navigate('/admin/dashboard');
+    }else{
+      navigate('/user/history');
+    }
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -48,10 +58,10 @@ const Login = () => {
               _id: res.data._id,
             },
           });
+          roleBasedRedirect(res);
         })
         .catch((err)=>console.log(err));
-
-        navigate("/");
+      
     } catch(error){
         console.log(error);
         toast.error(error.message);
@@ -76,9 +86,9 @@ const Login = () => {
                 _id: res.data._id
               },
           });
-          
+          roleBasedRedirect(res);
           }).catch((err)=>console.log(err));
-        navigate("/");
+        
     })
     .catch(err=> {
         console.log(err);
