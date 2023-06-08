@@ -22,9 +22,13 @@ exports.createOrUpdateUser=async(req,res)=>{
 };
 
 exports.currentUser=async(req,res)=>{
-    User.findOne({email:req.user.email}).exec((err,user)=>{
-        if(err) throw new Error(err);
+    try{
+        const user=await User.findOne({email:req.user.email}).exec();
         res.json(user);
-    });
+    }
+    catch(err){
+        console.log(err);
+        res.status(500).json({ error: 'An error occurred while fetching the currentUser.' });
+    }
 };  
 

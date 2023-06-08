@@ -27,6 +27,7 @@ import ProductUpdate from './pages/admin/product/ProductUpdate'
 import {auth} from './firebase'
 import {useDispatch} from 'react-redux'
 import { createOrUpdateUser } from './functions/auth'
+import { currentUser } from './functions/auth'
 
 
 const App=()=>{
@@ -38,21 +39,7 @@ useEffect(()=>{
       const idTokenResult=await user.getIdTokenResult()
       console.log("user",user);
 
-      // currentUser(idTokenResult.token).then(
-      //   (res)=>{
-      //     dispatch({
-      //       type: 'LOGGED_IN_USER',
-      //       payload:{
-      //         name:res.data.name,
-      //         email: res.data.email,
-      //         token: idTokenResult.token,
-      //         role: res.data.role,
-      //         _id: res.data._id,
-      //       }
-      //   });
-        
-      //   }).catch((err)=>console.log(err));
-      createOrUpdateUser(idTokenResult.token).then(
+      currentUser(idTokenResult.token).then(
         (res)=>{
           dispatch({
             type: 'LOGGED_IN_USER',
@@ -83,20 +70,24 @@ useEffect(()=>{
           <Route exact path="/register" element={<Register/>}/> 
           <Route exact path="/register/complete" element={<RegisterComplete/>}/> 
           <Route exact path="/forgot/password" element={<ForgotPassword/>}/> 
+          
           <Route element={<UserRoute/>}>
             <Route exact path="/user/history" element={<History />}/>
             <Route exact path="/user/password" element={<Password />}/>
             <Route exact path="/user/wishlist" element={<Wishlist/>}/>
           </Route>
           
-          <Route exact path="/admin/dashboard" element={<AdminDashboard />}/>
-          <Route exact path="/admin/category" element={<CategoryCreate />}/>
-          <Route exact path="/admin/category/:slug" element={<CategoryUpdate />}/>
-          <Route exact path="/admin/sub" element={<SubCreate />}/>
-          <Route exact path="/admin/sub/:slug" element={<SubUpdate />}/>
-          <Route exact path="/admin/product" element={<ProductCreate />}/>
-          <Route exact path="/admin/products" element={<AllProducts />}/>
-          <Route exact path="/admin/product/:slug" element={<ProductUpdate />}/>
+          <Route element={<AdminRoute/>}>
+            <Route exact path="/admin/dashboard" element={<AdminDashboard />}/>
+            <Route exact path="/admin/category" element={<CategoryCreate />}/>
+            <Route exact path="/admin/category/:slug" element={<CategoryUpdate />}/>
+            <Route exact path="/admin/sub" element={<SubCreate />}/>
+            <Route exact path="/admin/sub/:slug" element={<SubUpdate />}/>
+            <Route exact path="/admin/product" element={<ProductCreate />}/>
+            <Route exact path="/admin/products" element={<AllProducts />}/>
+            <Route exact path="/admin/product/:slug" element={<ProductUpdate />}/>
+          </Route>
+
 
           
           

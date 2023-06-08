@@ -20,7 +20,7 @@ exports.listAll = async (req, res) => {
   let products = await Product.find({})
     .limit(parseInt(req.params.count))
     .populate("category")
-    // .populate("subs")
+    .populate("subs")
     .sort([["createdAt", "desc"]])
     .exec();
   res.json(products);
@@ -41,7 +41,7 @@ exports.remove = async (req, res) => {
 exports.read = async (req, res) => {
   const product = await Product.findOne({ slug: req.params.slug })
   .populate("category")
-  // .populate("subs")
+  .populate("subs")
   .exec();
   res.json(product);
 };
