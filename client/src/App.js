@@ -21,6 +21,7 @@ import SubCreate from './pages/admin/sub/SubCreate'
 import SubUpdate from './pages/admin/sub/SubUpdate'
 import ProductCreate from './pages/admin/product/ProductCreate'
 import AllProducts from './pages/admin/product/AllProducts'
+import ProductUpdate from './pages/admin/product/ProductUpdate'
 
 
 import {auth} from './firebase'
@@ -95,6 +96,7 @@ useEffect(()=>{
           <Route exact path="/admin/sub/:slug" element={<SubUpdate />}/>
           <Route exact path="/admin/product" element={<ProductCreate />}/>
           <Route exact path="/admin/products" element={<AllProducts />}/>
+          <Route exact path="/admin/product/:slug" element={<ProductUpdate />}/>
 
           
           
