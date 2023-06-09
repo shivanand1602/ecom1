@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import {Button} from 'antd'
 import {MailOutlined,GoogleOutlined} from "@ant-design/icons";
 import { useDispatch,useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useLocation } from "react-router-dom";
 import {Link} from 'react-router-dom'
 import {createOrUpdateUser} from '../../functions/auth'
 
@@ -18,23 +18,50 @@ const Login = () => {
   const {user}=useSelector((state) =>({...state}));
   const navigate=useNavigate()
   
-//isko majboori me huta rhe video me nhi hutaya hai( for the role based redirect)
 
-  useEffect(()=>{
-      if(user && user.token){
-          navigate('/');
+  let dispatch=useDispatch();
+  let location = useLocation();
+
+  // useEffect(()=>{
+  //     if(user && user.token){
+  //         navigate('/');
+  //     }
+  // },[user]);
+
+  
+
+  // const roleBasedRedirect =(res)=>{
+  //   if(res.data.role==='admin'){
+  //     navigate('/admin/dashboard');
+  //   }else{
+  //     navigate('/user/history');
+  //   }
+  // }
+  
+  useEffect(() => {
+    let intended = location.state;
+    if (intended) {
+      return;
+    } else {
+      if (user && user.token) {
+        navigate('/');
       }
-  },[user]);
-
-  let dispatch=useDispatch()
-
-  const roleBasedRedirect =(res)=>{
-    if(res.data.role==='admin'){
-      navigate('/admin/dashboard');
-    }else{
-      navigate('/user/history');
     }
-  }
+  }, [user]);
+ 
+  const roleBasedRedirect = (res) => {
+    // check if intended
+    let intended = location.state;
+    if (intended) {
+      navigate(intended.from);
+    } else {
+      if (res.data.role === 'admin') {
+        navigate('/admin/dashboard');
+      } else {
+        navigate('/user/history');
+      }
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
