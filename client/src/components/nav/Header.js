@@ -5,12 +5,14 @@ import {
   SettingOutlined,
   UserOutlined,
   UserAddOutlined,
-  LogoutOutlined
+  LogoutOutlined,
+  ShoppingOutlined
 } from "@ant-design/icons";
 import {useNavigate} from "react-router-dom"
 import { Link } from "react-router-dom";
 import firebase from 'firebase/compat/app';
 import { useDispatch,useSelector} from "react-redux";
+import Search from "../forms/Search";
 
 const { SubMenu, Item } = Menu;
 
@@ -37,6 +39,10 @@ const Header = () => {
     <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
       <Item key="home" icon={<AppstoreOutlined />}>
         <Link to="/">Home</Link>
+      </Item>
+
+      <Item key="shop" icon={<ShoppingOutlined />}>
+        <Link to="/shop">Shop</Link>
       </Item>
 
       {!user && (
@@ -69,6 +75,10 @@ const Header = () => {
         <Item icon={<LogoutOutlined/>} onClick={logout}>LogOut</Item>
       </SubMenu>
       )}
+
+      <span className="float-right p-1">
+        <Search />
+      </span>
      
     </Menu>
   );
