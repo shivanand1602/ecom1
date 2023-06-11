@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import { Menu } from "antd";
+import { Menu, Badge } from "antd";
 import {
   AppstoreOutlined,
   SettingOutlined,
   UserOutlined,
   UserAddOutlined,
   LogoutOutlined,
-  ShoppingOutlined
+  ShoppingOutlined,
+  ShoppingCartOutlined
 } from "@ant-design/icons";
 import {useNavigate} from "react-router-dom"
 import { Link } from "react-router-dom";
@@ -20,7 +21,7 @@ const Header = () => {
   const [current, setCurrent] = useState("home");
   const navigate = useNavigate();
   let dispatch=useDispatch()
-  let {user}= useSelector((state)=>({...state}));
+  let {user, cart}= useSelector((state)=>({...state}));
 
   const handleClick = (e) => {
     setCurrent(e.key);
@@ -43,6 +44,14 @@ const Header = () => {
 
       <Item key="shop" icon={<ShoppingOutlined />}>
         <Link to="/shop">Shop</Link>
+      </Item>
+
+      <Item key="cart" icon={<ShoppingCartOutlined />}>
+        <Link to="/cart">
+          <Badge count={cart.length} offset={[9, 0]}>
+            Cart
+          </Badge>
+        </Link>
       </Item>
 
       {!user && (

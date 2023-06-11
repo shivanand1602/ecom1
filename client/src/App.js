@@ -7,6 +7,7 @@ import Login from './pages/auth/Login'
 import Register from './pages/auth/Register'
 import Home from './pages/Home'
 import Header from './components/nav/Header'
+import SideDrawer from './components/drawer/SideDrawer'
 import RegisterComplete from './pages/auth/RegisterComplete'
 import ForgotPassword from './pages/auth/ForgotPassword'
 import History from './pages/user/History'
@@ -26,6 +27,10 @@ import Product from './pages/Product'
 import CategoryHome from './pages/category/CategoryHome'
 import SubHome from './pages/sub/SubHome'
 import Shop from './pages/Shop'
+import Cart from './pages/Cart'
+import Checkout from './pages/Checkout'
+import CreateCouponPage from './pages/admin/coupon/CreateCouponPage'
+import Payment from './pages/Payment'
 
 
 import {auth} from './firebase'
@@ -67,6 +72,7 @@ useEffect(()=>{
     return(
       <>
        <Header/> 
+       <SideDrawer />
        <ToastContainer />
        <Routes>
           <Route exact path="/" element={<Home/>}/> 
@@ -79,6 +85,8 @@ useEffect(()=>{
             <Route exact path="/user/history" element={<History />}/>
             <Route exact path="/user/password" element={<Password />}/>
             <Route exact path="/user/wishlist" element={<Wishlist/>}/>
+            <Route exact path="/checkout" element={<Checkout/>}/>
+            <Route exact path="/payment" element={<Payment/>}/>
           </Route>
           
           <Route element={<AdminRoute/>}>
@@ -90,12 +98,14 @@ useEffect(()=>{
             <Route exact path="/admin/product" element={<ProductCreate />}/>
             <Route exact path="/admin/products" element={<AllProducts />}/>
             <Route exact path="/admin/product/:slug" element={<ProductUpdate />}/>
+            <Route exact path="/admin/coupon" element={<CreateCouponPage />}/>
           </Route>
 
           <Route exact path="/product/:slug" element={<Product/>}/>
           <Route exact path="/category/:slug" element={<CategoryHome/>}/>
           <Route exact path="/sub/:slug" element={<SubHome/>}/>
-          <Route exact path="/shop" element={<Shop/>}/> 
+          <Route exact path="/shop" element={<Shop/>}/>
+          <Route exact path="/cart" element={<Cart/>}/> 
           
           
           
