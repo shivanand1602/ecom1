@@ -13,7 +13,7 @@ import AdminNav from "../../../components/nav/AdminNav";
 
 const CreateCouponPage = () => {
   const [name, setName] = useState("");
-  const [expiry, setExpiry] = useState("");
+  const [expiry, setExpiry] = useState(new Date());
   const [discount, setDiscount] = useState("");
   const [loading, setLoading] = useState("");
   const [coupons, setCoupons] = useState([]);
@@ -97,12 +97,12 @@ const CreateCouponPage = () => {
               <label className="text-muted">Expiry</label>
               <br />
               <DatePicker
-                className="form-control"
-                selected={new Date()}
-                value={expiry}
-                onChange={(date) => setExpiry(date)}
-                required
-              />
+                  className="form-control"
+                  selected={expiry}
+                  value={expiry}
+                  onChange={(date) => setExpiry(date)}
+                  required
+                />
             </div>
 
             <button className="btn btn-outline-primary">Save</button>
